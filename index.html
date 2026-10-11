@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07120c">
+  <title>Uma Surpresa!</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+      background-color: #07120c;
+      background-image:
+        linear-gradient(
+          rgba(0, 0, 0, 0.35),
+          rgba(0, 0, 0, 0.65)
+        ),
+        url("surpresa.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      padding: 24px;
+    }
+
+    .conteudo {
+      width: 100%;
+      max-width: 420px;
+      padding: 28px 20px;
+      background: rgba(0, 0, 0, 0.62);
+      border: 2px solid #64d64b;
+      border-radius: 18px;
+      box-shadow: 0 0 25px rgba(74, 255, 57, 0.35);
+    }
+
+    h1 {
+      font-size: clamp(30px, 8vw, 46px);
+      color: #8cff72;
+      text-shadow: 0 0 14px #39ff14;
+      margin: 0 0 14px;
+    }
+
+    p {
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 17px 12px;
+      border: 2px solid #aaff91;
+      border-radius: 10px;
+      background: #278b25;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 18px rgba(65, 255, 55, 0.45);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:active {
+      transform: scale(0.97);
+      background: #1b651b;
+    }
+
+    #aviso {
+      display: none;
+      margin-top: 18px;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="conteudo">
+    <h1>SURPRESA!</h1>
+
+    <p>
+      Uma aventura está esperando por você...
+    </p>
+
+    <p>
+      🎁🌿⛏️
+    </p>
+
+    <button id="botao" type="button">
+      ABRIR SURPRESA
+    </button>
+
+    <p id="aviso" role="status" aria-live="polite"></p>
+  </main>
+
+  <script>
+    const botao = document.getElementById("botao");
+    const aviso = document.getElementById("aviso");
+
+    botao.addEventListener("click", function () {
+      aviso.style.display = "block";
+      aviso.textContent = "Tentando abrir o Minecraft...";
+
+      const agente = navigator.userAgent;
+      const android = /Android/i.test(agente);
+      const iphone = /iPhone|iPad|iPod/i.test(agente);
+
+      if (android) {
+        window.location.href =
+          "intent://#Intent;package=com.mojang.minecraftpe;scheme=minecraft;end";
+      } else if (iphone) {
+        window.location.href = "minecraft://";
+      } else {
+        aviso.textContent =
+          "Abra esta página em um celular para tentar iniciar o Minecraft.";
+        return;
+      }
+
+      setTimeout(function () {
+        aviso.textContent =
+          "Se o Minecraft não abriu, tente abrir o jogo manualmente. O navegador pode bloquear esse link.";
+      }, 2500);
+    });
+  </script>
+</body>
+</html>
